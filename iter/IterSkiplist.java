@@ -64,6 +64,19 @@ public class IterSkiplist {
 
     /* David Chao */
     public boolean isPresent(Integer a) {
+        SkipListNode p = head;
+        while(true){
+            while((p.right != tail)&&p.right.val<=a){
+                p = p.right;
+            }
+            if(p.val == a){
+                return true;
+            }else if(p.down!=null){
+                p=p.down;
+            }else{
+                return false;
+            }
+        }
         return false;
     }
 
