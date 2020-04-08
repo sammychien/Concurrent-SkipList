@@ -43,35 +43,56 @@ public class IterSkiplist {
 
     /* Huy Le */
     public boolean insert(Integer a) {
-        if (isPresent(a)) return true;
+
+        SkipListNode p = new SkipListNode(a);
+        SkipListNode current = findPosition(a);
+
+        p.right = current.right;
+        p.left = current;
+        current.right.left = p;
+        current.right = p;
         size++;
 
         int level = 0;
 
-        while (Math.random() > 0.5) level++;
-        while (level > maxHeight) {
-            //head.right.insert(null);
-        	head.right = tail;
-        	tail.left = head;
-            maxHeight++;
-        }
-        SkipListNode p = new SkipListNode(a);
-        SkipListNode current;
-        while (level >= 0) {
-            current = head;
-            while (current.val != Integer.MAX_VALUE) {
-                if (current.right.val < a) current = current.right;
-                else {
-                    p.right = current.right;
-                    p.left = current;
-                    current.right.left = p;
-                    current.right = p;
-                    if (level != maxHeight) p.up = p;
-                    if (level != 0) p.down = p;
-                    break;
-                }
+        while (Math.random() > 0.5) {
+            level++;
+            while (level > maxHeight) {
+                //create two new nodes for head and tail
+                SkipListNode p1 = new SkipListNode(Integer.MIN_VALUE);
+                SkipListNode p2 = new SkipListNode(Integer.MAX_VALUE);
+
+                //link the two new nodes
+                p1.right = p2;
+                p2.left = p1;
+
+                //link them to the old head and tail
+                head.up = p1;
+                tail.up = p2;
+
+                //set new head and tail
+                head = p1;
+                tail = p2;
+
+                maxHeight++;
             }
-            level--;
+
+            //back tracking to find a link to a higher level
+            while (current.up == null) {
+                current = current.left;
+            }
+
+            //set new current node
+            current = current.up;
+
+            SkipListNode temp = new SkipListNode(a);
+            temp.right = current.right;
+            temp.left = current;
+            temp.down = p;
+            current.right.left = temp;
+            current.right = temp;
+            p.up = temp;
+            p = temp;
         }
         return true;
     }
@@ -131,7 +152,7 @@ public class IterSkiplist {
     	}
     	SkipListNode currentNode = head;
     	SkipListNode lastRowHead = head.right;
-    	
+
     	//Find last row so that the printing can be pretty
     	while(lastRowHead.down != null) {
     		lastRowHead = lastRowHead.down;
@@ -139,7 +160,7 @@ public class IterSkiplist {
     	lastRowHead = lastRowHead.left;
     	SkipListNode lastRowMoving = lastRowHead;
     	currentNode = currentNode.right;
-    	
+
     	while(currentNode != null) {
     		//currentNode = currentNode.right; //don't want to print the head of a row
     		//print a row
@@ -159,25 +180,25 @@ public class IterSkiplist {
         		} else if(currentNode.val < 100) {
         			System.out.print(" "); //To pad because only 2 digits
         		}
-        		
+
         		//print the value
         		System.out.print(currentNode.val.toString() + " ");
         		currentNode = currentNode.right;
         	}
         	System.out.print("]");
         	System.out.print("\n");
-        	
+
         	//Traverse back to the beginning of the row
         	while(currentNode.left != null) {
         		currentNode = currentNode.left;
         	}
         	currentNode = currentNode.right;
-        	
+
         	currentNode = currentNode.down; //currentNode is now the head of the next row down
         	//currentNode = currentNode.left;
         	lastRowMoving = lastRowHead;
     	}
-    	
+
     }
 
     /**
