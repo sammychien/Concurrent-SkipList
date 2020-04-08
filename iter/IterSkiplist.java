@@ -69,6 +69,8 @@ public class IterSkiplist {
                 //link them to the old head and tail
                 head.up = p1;
                 tail.up = p2;
+                p1.down = head;
+                p2.down = tail;
 
                 //set new head and tail
                 head = p1;
