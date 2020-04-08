@@ -50,7 +50,9 @@ public class IterSkiplist {
 
         while (Math.random() > 0.5) level++;
         while (level > maxHeight) {
-            head.right.insert(null);
+            //head.right.insert(null);
+        	head.right = tail;
+        	tail.left = head;
             maxHeight++;
         }
         SkipListNode p = new SkipListNode(a);
