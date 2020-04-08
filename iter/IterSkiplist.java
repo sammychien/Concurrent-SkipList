@@ -125,21 +125,23 @@ public class IterSkiplist {
     /* Clara Johnson */
     //Note: looks pretty for up to 3 digit integers; can be changed to work for larger integers
     public void printg() {
-    	if(head == null) {
+    	if(size == 0) {
     		System.out.println("[]");
     		return;
     	}
     	SkipListNode currentNode = head;
-    	SkipListNode lastRowHead = head;
+    	SkipListNode lastRowHead = head.right;
     	
     	//Find last row so that the printing can be pretty
     	while(lastRowHead.down != null) {
     		lastRowHead = lastRowHead.down;
     	}
+    	lastRowHead = lastRowHead.left;
     	SkipListNode lastRowMoving = lastRowHead;
+    	currentNode = currentNode.right;
     	
     	while(currentNode != null) {
-    		currentNode = currentNode.right; //don't want to print the head of a row
+    		//currentNode = currentNode.right; //don't want to print the head of a row
     		//print a row
     		System.out.print("[ ");
         	while(currentNode.val != Integer.MAX_VALUE) {
@@ -169,8 +171,10 @@ public class IterSkiplist {
         	while(currentNode.left != null) {
         		currentNode = currentNode.left;
         	}
+        	currentNode = currentNode.right;
         	
         	currentNode = currentNode.down; //currentNode is now the head of the next row down
+        	//currentNode = currentNode.left;
         	lastRowMoving = lastRowHead;
     	}
     	
