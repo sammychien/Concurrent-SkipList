@@ -43,7 +43,7 @@ public class IterSkiplist {
 
     /* Huy Le */
     public boolean insert(Integer a) {
-
+        if (isPresent(a)) return false;
         SkipListNode p = new SkipListNode(a);
         SkipListNode current = findPosition(a);
 
