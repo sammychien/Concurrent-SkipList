@@ -153,18 +153,19 @@ public class IterSkiplist {
     		return;
     	}
     	SkipListNode currentNode = head;
-    	SkipListNode lastRowHead = head.right;
+    	//SkipListNode lastRowHead = head.right;
+    	SkipListNode lastRowHead = head;
 
     	//Find last row so that the printing can be pretty
     	while(lastRowHead.down != null) {
     		lastRowHead = lastRowHead.down;
     	}
-    	lastRowHead = lastRowHead.left;
+    	//lastRowHead = lastRowHead.left;
     	SkipListNode lastRowMoving = lastRowHead;
-    	currentNode = currentNode.right;
+    	//currentNode = currentNode.right;
 
     	while(currentNode != null) {
-    		//currentNode = currentNode.right; //don't want to print the head of a row
+    		currentNode = currentNode.right; //don't want to print the head of a row
     		//print a row
     		System.out.print("[ ");
         	while(currentNode.val != Integer.MAX_VALUE) {
@@ -194,7 +195,7 @@ public class IterSkiplist {
         	while(currentNode.left != null) {
         		currentNode = currentNode.left;
         	}
-        	currentNode = currentNode.right;
+        	//currentNode = currentNode.right;
 
         	currentNode = currentNode.down; //currentNode is now the head of the next row down
         	//currentNode = currentNode.left;
