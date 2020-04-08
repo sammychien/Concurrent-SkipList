@@ -46,14 +46,14 @@ public class IterSkiplist {
         if (isPresent(a)) return true;
         size++;
 
-        level = 0;
+        int level = 0;
 
         while (Math.random() > 0.5) level++;
         while (level > maxHeight) {
             head.right.insert(null);
             maxHeight++;
         }
-        SkiplistNode p = new SkipListNode(a);
+        SkipListNode p = new SkipListNode(a);
         SkipListNode current;
         while (level >= 0) {
             current = head;
@@ -107,7 +107,6 @@ public class IterSkiplist {
                 return false;
             }
         }
-        return false;
     }
 
     /*
@@ -122,8 +121,57 @@ public class IterSkiplist {
     }
 
     /* Clara Johnson */
+    //Note: looks pretty for up to 3 digit integers; can be changed to work for larger integers
     public void printg() {
-
+    	if(head == null) {
+    		System.out.println("[]");
+    		return;
+    	}
+    	SkipListNode currentNode = head;
+    	SkipListNode lastRowHead = head;
+    	
+    	//Find last row so that the printing can be pretty
+    	while(lastRowHead.down != null) {
+    		lastRowHead = lastRowHead.down;
+    	}
+    	SkipListNode lastRowMoving = lastRowHead;
+    	
+    	while(currentNode != null) {
+    		currentNode = currentNode.right; //don't want to print the head of a row
+    		//print a row
+    		System.out.print("[ ");
+        	while(currentNode.val != Integer.MAX_VALUE) {
+        		//figure out how many padding spaces to print and print them
+        		int count = 0;
+        		while(lastRowMoving.val != currentNode.val) {
+        			count++;
+        			lastRowMoving = lastRowMoving.right;
+        		}
+        		for(int i = 0; i < count - 1; i++) {
+        			System.out.print("   ");//4 spaces - 3 spaces for the missing number, 1 for the separation
+        		}
+        		if(currentNode.val < 10) {
+        			System.out.print("  "); //To pad because only 1 digit
+        		} else if(currentNode.val < 100) {
+        			System.out.print(" "); //To pad because only 2 digits
+        		}
+        		
+        		//print the value
+        		System.out.print(currentNode.val.toString() + " ");
+        		currentNode = currentNode.right;
+        	}
+        	System.out.print("]");
+        	System.out.print("\n");
+        	
+        	//Traverse back to the beginning of the row
+        	while(currentNode.left != null) {
+        		currentNode = currentNode.left;
+        	}
+        	
+        	currentNode = currentNode.down; //currentNode is now the head of the next row down
+        	lastRowMoving = lastRowHead;
+    	}
+    	
     }
 
     /**
