@@ -114,17 +114,18 @@ public class IterSkiplist {
             toDelete.right.left = toDelete.left;
             toDelete = toDelete.up;
         }
-        return false;
+        size--;
+        return true;
     }
 
     /* David Chao */
     public boolean isPresent(Integer a) {
         SkipListNode p = head;
         while(true){
-            while((p.right != tail)&&p.right.val<=a){
+            while((p.right != tail)&&(p.right.val<=a)){
                 p = p.right;
             }
-            if(p.val == a){
+            if(p.val.intValue() == a.intValue()){
                 return true;
             }else if(p.down!=null){
                 p=p.down;
@@ -217,7 +218,7 @@ public class IterSkiplist {
         SkipListNode currentNode = head;
         while(true) {
             // Search right until larger entry is found
-            while(currentNode.right.val < target) {
+            while(currentNode.right.val <= target) {
                 currentNode = currentNode.right;
             }
             // Try to go down a layer
