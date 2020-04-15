@@ -188,7 +188,7 @@ public class IterSkiplist {
         			lastRowMoving = lastRowMoving.right;
         		}
         		for(int i = 0; i < count - 1; i++) {
-        			System.out.print("   ");//4 spaces - 3 spaces for the missing number, 1 for the separation
+        			System.out.print("    ");//5 spaces - 3 spaces for the missing number, 2 for the separation
         		}
         		if(currentNode.val < 10) {
         			System.out.print("  "); //To pad because only 1 digit
