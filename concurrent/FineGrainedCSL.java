@@ -17,6 +17,9 @@ public class FineGrainedCSL<T> {
     public boolean isPresent(T a){
         
     }
+    public boolean contains(T a){
+        
+    }
     public boolean insert(T a){
     
     }
