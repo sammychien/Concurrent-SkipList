@@ -10,7 +10,7 @@ public class FineGrainedCSLNode<T> {
     final FineGrainedCSLNode<T>[] next;
     volatile boolean marked = false;
     volatile boolean fullyLinked = false;
-    private int topLevel; // height of Node (determined using Random obj)
+    public int topLevel; // height of Node (determined using Random obj)
     /* Sentinel Node Constructor */
     public FineGrainedCSLNode(int key) {
         this.item = null;
@@ -31,8 +31,4 @@ public class FineGrainedCSLNode<T> {
     public void unlock() {
         lock.unlock();
     }
-
-
-
-
 }
