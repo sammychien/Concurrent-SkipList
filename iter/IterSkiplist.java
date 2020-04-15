@@ -24,6 +24,12 @@ public class IterSkiplist {
             up = null;
             down = null;
         }
+        @Override
+        public String toString() {
+            if (val == Integer.MIN_VALUE) return "Head Node";
+            else if (val == Integer.MAX_VALUE) return "Tail Node";
+            else return Integer.toString(val);
+        }
     }
 
     SkipListNode head;
@@ -114,6 +120,11 @@ public class IterSkiplist {
             toDelete.right.left = toDelete.left;
             toDelete = toDelete.up;
         }
+        while (head.right == tail) {
+            maxHeight--;
+            head = head.down;
+            tail = tail.down;
+        }
         size--;
         return true;
     }
@@ -143,7 +154,7 @@ public class IterSkiplist {
     }
 
     public Integer height() {
-        return maxHeight;
+        return maxHeight+1; //for readability
     }
 
     /* Clara Johnson */
