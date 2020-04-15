@@ -120,7 +120,7 @@ public class IterSkiplist {
             toDelete.right.left = toDelete.left;
             toDelete = toDelete.up;
         }
-        while (head.right == tail) {
+        while (head.right == tail && head.down != null) {
             maxHeight--;
             head = head.down;
             tail = tail.down;

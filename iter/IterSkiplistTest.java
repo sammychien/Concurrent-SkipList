@@ -63,6 +63,23 @@ public class IterSkiplistTest {
     }
 
     @Test
+    public void testDeletion2() {
+        IterSkiplist myList = new IterSkiplist();
+        for (int i = -10; i < 11; i++) {
+            assertTrue(myList.insert(i));
+        }
+        for (int i = 10; i >= -10; i--) {
+            assertTrue(myList.delete(i));
+            assertTrue(myList.insert(i));
+        }
+        for (int i = -10; i < 11; i++) {
+            assertTrue(myList.delete(i));
+        }
+        assertTrue(myList.size() == 0);
+        assertTrue(myList.height() == 1);
+    }
+
+    @Test
     public void testDeletion(){
         IterSkiplist myList = new IterSkiplist();
         assertTrue(myList.insert(5));
