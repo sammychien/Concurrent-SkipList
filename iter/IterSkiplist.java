@@ -158,7 +158,7 @@ public class IterSkiplist {
     }
 
     /* Clara Johnson */
-    //Note: looks pretty for up to 3 digit integers; can be changed to work for larger integers
+    //Note: looks pretty for up to 4 digit integers; can be changed to work for larger integers
     public void printg() {
     	if(size == 0) {
     		System.out.println("[]");
@@ -188,12 +188,14 @@ public class IterSkiplist {
         			lastRowMoving = lastRowMoving.right;
         		}
         		for(int i = 0; i < count - 1; i++) {
-        			System.out.print("    ");//5 spaces - 3 spaces for the missing number, 2 for the separation
+        			System.out.print("     ");//6 spaces - 4 spaces for the missing number, 2 for the separation
         		}
         		if(currentNode.val < 10) {
-        			System.out.print("  "); //To pad because only 1 digit
+        			System.out.print("   "); //To pad because only 1 digit
         		} else if(currentNode.val < 100) {
-        			System.out.print(" "); //To pad because only 2 digits
+        			System.out.print("  "); //To pad because only 2 digits
+        		} else if(currentNode.val < 1000) {
+        			System.out.print(" ");//To pad because only 3 digits
         		}
 
         		//print the value
