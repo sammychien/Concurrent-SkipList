@@ -61,8 +61,9 @@ public class FineGrainedCSLTest {
     @Test
     public void FGThreadedDeletionTest() {
         SkipList<Integer> sl = new FineGrainedCSL<Integer>();
-        TestUtils.modNElems(10000, 4, sl, Operation.INSERT);
-        TestUtils.modNElems(10000, 4, sl, Operation.DELETE);     
+        TestUtils.modNElems(10000, 10, sl, Operation.INSERT);
+        assertEquals((Integer)10001, sl.size());
+        TestUtils.modNElems(10000, 10, sl, Operation.DELETE);     
         assertEquals((Integer)0, sl.size());
     }
 

@@ -60,8 +60,9 @@ public class LockFreeCSLTest {
     @Test
     public void LFThreadedDeletionTest() {
         SkipList<Integer> sl = new LockFreeCSL<Integer>();
-        TestUtils.modNElems(10000, 4, sl, Operation.INSERT);
-        TestUtils.modNElems(10000, 4, sl, Operation.DELETE);    
+        TestUtils.modNElems(10000, 10, sl, Operation.INSERT);
+        assertEquals((Integer)10001, sl.size());
+        TestUtils.modNElems(10000, 10, sl, Operation.DELETE);    
         assertEquals((Integer)0, sl.size());
     }
 
