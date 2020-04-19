@@ -2,7 +2,7 @@ package concurrent;
 
 import java.util.Random;
 
-public class FineGrainedCSL<T> {
+public class FineGrainedCSL<T> implements SkipList<T> {
     final static int MAX_LEVEL = 32;
     private Integer size;
     final FineGrainedCSLNode<T> head = new FineGrainedCSLNode<T>(Integer.MIN_VALUE);
@@ -65,7 +65,7 @@ public class FineGrainedCSL<T> {
                     valid = !pred.marked && !succ.marked && pred.next[level]==succ;
                 }
                 if (!valid) continue;
-                FineGrainedCSLNode<T> newNode = (FineGrainedCSLNode<T>) new FineGrainedCSLNode(a, topLevel);
+                FineGrainedCSLNode<T> newNode = (FineGrainedCSLNode<T>) new FineGrainedCSLNode<T>(a, topLevel);
                 for (int level = 0; level <= topLevel; level++)
                     newNode.next[level] = succs[level];
                 for (int level = 0; level <= topLevel; level++)

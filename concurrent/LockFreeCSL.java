@@ -2,8 +2,9 @@ package concurrent;
 
 import java.util.concurrent.atomic.AtomicMarkableReference;
 
-public class LockFreeCSL<T> {
+public class LockFreeCSL<T> implements SkipList<T> {
     static final int MAX_LEVEL = 32;
+    private Integer size;
     final LockFreeCSLNode<T> head = new LockFreeCSLNode<T>(Integer.MIN_VALUE);
     final LockFreeCSLNode<T> tail = new LockFreeCSLNode<T>(Integer.MAX_VALUE);
 
@@ -11,9 +12,10 @@ public class LockFreeCSL<T> {
         for (int i = 0; i < head.next.length; i++) {
             head.next[i] = new AtomicMarkableReference<LockFreeCSLNode<T>>(tail, false);
         }
+        size = 0;
     }
 
-    public boolean add(T x) {
+    public boolean insert(T x) {
         int topLevel = randomLevel();
         int bottomLevel = 0;
         LockFreeCSLNode<T>[] preds = (LockFreeCSLNode<T>[]) new LockFreeCSLNode[MAX_LEVEL + 1];
@@ -23,7 +25,7 @@ public class LockFreeCSL<T> {
             if (found) {
                 return false;
             } else {
-                LockFreeCSLNode<T> newNode = new LockFreeCSLNode(x, topLevel);
+                LockFreeCSLNode<T> newNode = new LockFreeCSLNode<T>(x, topLevel);
                 for (int level = bottomLevel; level <= topLevel; level++) {
                     LockFreeCSLNode<T> succ = succs[level];
                     newNode.next[level].set(succ, false);
@@ -44,12 +46,13 @@ public class LockFreeCSL<T> {
                         find(x, preds, succs);
                     }
                 }
+                size++;
                 return true;
             }
         }
     }
 
-    boolean remove(T x) {
+    public boolean delete(T x) {
         int bottomLevel = 0;
         LockFreeCSLNode<T>[] preds = (LockFreeCSLNode<T>[]) new LockFreeCSLNode[MAX_LEVEL + 1];
         LockFreeCSLNode<T>[] succs = (LockFreeCSLNode<T>[]) new LockFreeCSLNode[MAX_LEVEL + 1];
@@ -78,6 +81,7 @@ public class LockFreeCSL<T> {
                     succ = succs[bottomLevel].next[bottomLevel].get(marked);
                     if (iMarkedIt) {
                         find(x, preds, succs);
+                        size--;
                         return true;
                     } else if (marked[0]) return false;
                 }
@@ -125,7 +129,7 @@ public class LockFreeCSL<T> {
         }
     }
 
-    boolean contains(T x) {
+    public boolean contains(T x) {
         int bottomLevel = 0;
         int v = x.hashCode();
         boolean[] marked = {false};
@@ -147,6 +151,10 @@ public class LockFreeCSL<T> {
             }
         }
         return (curr.key == v);
+    }
+
+    public Integer size() {
+        return size;
     }
 
 }

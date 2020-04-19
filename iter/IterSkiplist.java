@@ -1,8 +1,8 @@
 package iter;
 
-import java.util.ArrayList;
+import concurrent.SkipList;
 
-public class IterSkiplist {
+public class IterSkiplist implements SkipList<Integer> {
 
     /*
     Other Details:
@@ -49,7 +49,7 @@ public class IterSkiplist {
 
     /* Huy Le */
     public boolean insert(Integer a) {
-        if (isPresent(a)) return false;
+        if (contains(a)) return false;
         SkipListNode p = new SkipListNode(a);
         SkipListNode current = findPosition(a);
 
@@ -113,7 +113,7 @@ public class IterSkiplist {
      * @return boolean
      */
     public boolean delete(Integer a) {
-        if (!isPresent(a)) return false;
+        if (!contains(a)) return false;
         SkipListNode toDelete = findPosition(a);
         while (toDelete != null) {
             toDelete.left.right = toDelete.right;
@@ -130,7 +130,7 @@ public class IterSkiplist {
     }
 
     /* David Chao */
-    public boolean isPresent(Integer a) {
+    public boolean contains(Integer a) {
         SkipListNode p = head;
         while(true){
             while((p.right != tail)&&(p.right.val<=a)){

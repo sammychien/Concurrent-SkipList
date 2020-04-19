@@ -27,7 +27,7 @@ public class IterSkiplistTest {
         assertNull(myList.tail.right);
         myList.printg(); //should print an empty list
         assertFalse(myList.delete(5));
-        assertFalse(myList.isPresent(5));
+        assertFalse(myList.contains(5));
     }
 
     @Test
@@ -35,7 +35,7 @@ public class IterSkiplistTest {
         IterSkiplist myList = new IterSkiplist();
         assertTrue(myList.insert(5)); //[5]
         assertEquals(myList.size.intValue(),1);
-        assertTrue(myList.isPresent(5));
+        assertTrue(myList.contains(5));
         assertTrue(myList.head.right.val==5);
         assertTrue(myList.tail.left.val==5);
         myList.printg();
@@ -57,7 +57,7 @@ public class IterSkiplistTest {
         }
         myList.printg();
         for(int i = 0;i<1000;i++){
-            assertTrue(myList.isPresent(p[i]));
+            assertTrue(myList.contains(p[i]));
 
         }
     }
@@ -86,8 +86,8 @@ public class IterSkiplistTest {
         assertTrue(myList.insert(104));
         myList.printg();
 
-        assertTrue(myList.isPresent(5));
-        assertTrue(myList.isPresent(104));
+        assertTrue(myList.contains(5));
+        assertTrue(myList.contains(104));
         assertTrue(myList.size==2);
         assertTrue(myList.delete(5));
         assertTrue(myList.size==1);
@@ -105,12 +105,12 @@ public class IterSkiplistTest {
             assertTrue(myList.insert(i));
         }
         for(int i = 0;i<1000;i++){
-            assertTrue(myList.isPresent(i));
+            assertTrue(myList.contains(i));
         }
         myList.delete(500);
-        assertFalse(myList.isPresent(500));
-        assertTrue(myList.isPresent(499));
-        assertTrue(myList.isPresent(501));
+        assertFalse(myList.contains(500));
+        assertTrue(myList.contains(499));
+        assertTrue(myList.contains(501));
     }
 
     @Test
@@ -130,7 +130,7 @@ public class IterSkiplistTest {
         }
         myList.printg();
         for(int i = 0;i<1000;i++){
-            assertTrue(myList.isPresent(p[i]));
+            assertTrue(myList.contains(p[i]));
         }
         assertTrue(myList.size==1000);
         for(int i = 0;i<500;i++){
@@ -152,7 +152,7 @@ public class IterSkiplistTest {
         System.out.println("List: ");
         myList.printg(); //should print an empty list
         System.out.println("List Height: " + myList.height() + "; List size: " + myList.size());
-        System.out.println("20 is in the list " + myList.isPresent(20));
+        System.out.println("20 is in the list " + myList.contains(20));
         myList.insert(5); //[5]
         System.out.println("List Height: " + myList.height() + "; List size: " + myList.size());
         System.out.println("List: ");
@@ -181,14 +181,14 @@ public class IterSkiplistTest {
         System.out.println("List Height: " + myList.height() + "; List size: " + myList.size());
         System.out.println("List: ");
         myList.printg();
-        System.out.println("4 is in the list " + myList.isPresent(4));
+        System.out.println("4 is in the list " + myList.contains(4));
         System.out.println("List: ");
         myList.printg();
         myList.delete(4);
         System.out.println("List Height: " + myList.height() + "; List size: " + myList.size());
         System.out.println("List: ");
         myList.printg();
-        System.out.println("4 is in the list " + myList.isPresent(4));
+        System.out.println("4 is in the list " + myList.contains(4));
         System.out.println("Size is " + myList.size());
         System.out.println("Height is " + myList.height());
     }
