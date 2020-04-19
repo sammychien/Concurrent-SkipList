@@ -4,7 +4,6 @@ import java.util.concurrent.atomic.AtomicMarkableReference;
 
 public class LockFreeCSL<T> implements SkipList<T> {
     static final int MAX_LEVEL = 32;
-    private Integer size;
     final LockFreeCSLNode<T> head = new LockFreeCSLNode<T>(Integer.MIN_VALUE);
     final LockFreeCSLNode<T> tail = new LockFreeCSLNode<T>(Integer.MAX_VALUE);
 
@@ -12,9 +11,9 @@ public class LockFreeCSL<T> implements SkipList<T> {
         for (int i = 0; i < head.next.length; i++) {
             head.next[i] = new AtomicMarkableReference<LockFreeCSLNode<T>>(tail, false);
         }
-        size = 0;
     }
 
+    @SuppressWarnings("unchecked")
     public boolean insert(T x) {
         int topLevel = randomLevel();
         int bottomLevel = 0;
@@ -46,12 +45,12 @@ public class LockFreeCSL<T> implements SkipList<T> {
                         find(x, preds, succs);
                     }
                 }
-                size++;
                 return true;
             }
         }
     }
 
+    @SuppressWarnings("unchecked")
     public boolean delete(T x) {
         int bottomLevel = 0;
         LockFreeCSLNode<T>[] preds = (LockFreeCSLNode<T>[]) new LockFreeCSLNode[MAX_LEVEL + 1];
@@ -81,7 +80,6 @@ public class LockFreeCSL<T> implements SkipList<T> {
                     succ = succs[bottomLevel].next[bottomLevel].get(marked);
                     if (iMarkedIt) {
                         find(x, preds, succs);
-                        size--;
                         return true;
                     } else if (marked[0]) return false;
                 }
@@ -154,7 +152,13 @@ public class LockFreeCSL<T> implements SkipList<T> {
     }
 
     public Integer size() {
-        return size;
+        int count = 0;
+        LockFreeCSLNode<T> currNode = head;
+        while (currNode.next[0].getReference() != tail) {
+            count++;
+            currNode = currNode.next[0].getReference();
+        }
+        return count;
     }
 
 }

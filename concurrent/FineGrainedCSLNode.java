@@ -11,23 +11,29 @@ public class FineGrainedCSLNode<T> {
     volatile boolean marked = false;
     volatile boolean fullyLinked = false;
     public int topLevel; // height of Node (determined using Random obj)
+    
     /* Sentinel Node Constructor */
+    @SuppressWarnings("unchecked")
     public FineGrainedCSLNode(int key) {
         this.item = null;
         this.key = key;
         next = new FineGrainedCSLNode[FineGrainedCSL.MAX_LEVEL+1];
         topLevel = FineGrainedCSL.MAX_LEVEL;
     }
+
     /* Regular Node Constructor */
+    @SuppressWarnings("unchecked")
     public FineGrainedCSLNode(T item, int height) {
         this.item = item;
         key = item.hashCode();
         next = new FineGrainedCSLNode[height+1];
         topLevel = height;
     }
+
     public void lock() {
         lock.lock();
     }
+    
     public void unlock() {
         lock.unlock();
     }

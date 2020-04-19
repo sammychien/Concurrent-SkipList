@@ -4,14 +4,12 @@ import java.util.Random;
 
 public class FineGrainedCSL<T> implements SkipList<T> {
     final static int MAX_LEVEL = 32;
-    private Integer size;
     final FineGrainedCSLNode<T> head = new FineGrainedCSLNode<T>(Integer.MIN_VALUE);
     final FineGrainedCSLNode<T> tail = new FineGrainedCSLNode<T>(Integer.MAX_VALUE);
     public FineGrainedCSL() {
         for (int i = 0; i < head.next.length; i++) {
             head.next[i] = tail;
         }
-        size = 0;
     }
     public int find(T x, FineGrainedCSLNode<T>[] preds, FineGrainedCSLNode<T>[] succs) {
         int key = x.hashCode();
@@ -31,6 +29,7 @@ public class FineGrainedCSL<T> implements SkipList<T> {
         return lFound;
     }
 
+    @SuppressWarnings("unchecked")
     public boolean contains(T a){
         FineGrainedCSLNode<T>[] preds = (FineGrainedCSLNode<T>[]) new FineGrainedCSLNode[MAX_LEVEL + 1];
         FineGrainedCSLNode<T>[] succs = (FineGrainedCSLNode<T>[]) new FineGrainedCSLNode[MAX_LEVEL + 1];
@@ -38,6 +37,8 @@ public class FineGrainedCSL<T> implements SkipList<T> {
         boolean result = levelFound != -1 && succs[levelFound].fullyLinked && !succs[levelFound].marked;
         return result;
     }
+
+    @SuppressWarnings("unchecked")
     public boolean insert(T a){
         int topLevel = randomLevel();
         FineGrainedCSLNode<T>[] preds = (FineGrainedCSLNode<T>[]) new FineGrainedCSLNode[MAX_LEVEL + 1];
@@ -71,7 +72,6 @@ public class FineGrainedCSL<T> implements SkipList<T> {
                 for (int level = 0; level <= topLevel; level++)
                     preds[level].next[level] = newNode;
                 newNode.fullyLinked = true;
-                size++;
                 return true;
             } finally {
                 for (int level = 0; level <= highestLocked; level++) {
@@ -95,8 +95,8 @@ public class FineGrainedCSL<T> implements SkipList<T> {
         return level;
     }
 
+    @SuppressWarnings("unchecked")
     public boolean delete(T a) {
-
         FineGrainedCSLNode<T> victim = null;
         boolean isMarked = false;
         int topLevel = -1;
@@ -145,6 +145,13 @@ public class FineGrainedCSL<T> implements SkipList<T> {
 
     }
     public Integer size() {
-        return size;
+        int count = 0;
+        FineGrainedCSLNode<T> currNode = head;
+        while (currNode.next[0] != tail) {
+            count++;
+            currNode = currNode.next[0];
+        }
+
+        return count;
     }
 }

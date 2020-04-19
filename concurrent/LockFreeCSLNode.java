@@ -7,7 +7,9 @@ public class LockFreeCSLNode<T> {
     final int key;
     final AtomicMarkableReference<LockFreeCSLNode<T>>[] next;
     public int topLevel;
+
     // constructor for sentinel nodes
+    @SuppressWarnings("unchecked")
     public LockFreeCSLNode(int key) {
         this.value = null;
         this.key = key;
@@ -18,7 +20,9 @@ public class LockFreeCSLNode<T> {
         }
         topLevel = LockFreeCSL.MAX_LEVEL;
     }
+    
     // constructor for ordinary nodes
+    @SuppressWarnings("unchecked")
     public LockFreeCSLNode(T x, int height) {
         this.value = x;
         this.key = x.hashCode();

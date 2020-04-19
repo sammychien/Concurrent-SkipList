@@ -11,14 +11,13 @@ import org.junit.Test;
 
 import concurrent.TestUtils.Operation;
 
-public class FineGrainedCSLTest {
+public class LockFreeCSLTest {
 
-    
     /*********************************************************************************************/
     /* DELETION TESTS */
     @Test
-    public void FGSimpleDeletionTest() {
-        SkipList<Integer> sl = new FineGrainedCSL<Integer>();
+    public void LFSimpleDeletionTest() {
+        SkipList<Integer> sl = new LockFreeCSL<Integer>();
         for (int i = 0; i < 10; i++) {
             assertTrue(sl.insert(i));
         }
@@ -29,8 +28,8 @@ public class FineGrainedCSLTest {
     }
 
     @Test
-    public void FGComplexDeletionTest() {
-        SkipList<Integer> sl = new FineGrainedCSL<Integer>();
+    public void LFComplexDeletionTest() {
+        SkipList<Integer> sl = new LockFreeCSL<Integer>();
         HashSet<Integer> my = new HashSet<>();
         int[]p = new int[1000];
         Random rand = new Random();
@@ -59,16 +58,13 @@ public class FineGrainedCSLTest {
     }
 
     @Test
-    public void FGThreadedDeletionTest() {
-        SkipList<Integer> sl = new FineGrainedCSL<Integer>();
+    public void LFThreadedDeletionTest() {
+        SkipList<Integer> sl = new LockFreeCSL<Integer>();
         TestUtils.modNElems(10000, 4, sl, Operation.INSERT);
-        TestUtils.modNElems(10000, 4, sl, Operation.DELETE);     
+        TestUtils.modNElems(10000, 4, sl, Operation.DELETE);    
         assertEquals((Integer)0, sl.size());
     }
 
     /*********************************************************************************************/
-
-
-
 
 }
