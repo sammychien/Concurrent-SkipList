@@ -6,7 +6,7 @@ public class LockFreeCSLNode<T> {
     final T value;
     final int key;
     final AtomicMarkableReference<LockFreeCSLNode<T>>[] next;
-    private int topLevel;
+    public int topLevel;
     // constructor for sentinel nodes
     public LockFreeCSLNode(int key) {
         this.value = null;
