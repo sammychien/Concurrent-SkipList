@@ -66,10 +66,113 @@ public class FineGrainedCSLTest {
         TestUtils.modNElems(10000, 10, sl, Operation.DELETE);     
         assertEquals((Integer)0, sl.size());
     }
+    @Test
+    public void FGComplexThreadedDeletionTest() {
+        SkipList<Integer> sl = new FineGrainedCSL<Integer>();
+        TestUtils.modNElems(0,100, 10, sl, Operation.INSERT);
+        TestUtils.modNElems(101,200, 10, sl, Operation.INSERT);
+        TestUtils.modNElems(201,300, 10, sl, Operation.INSERT);
+        TestUtils.modNElems(500,1000, 10, sl, Operation.INSERT);
+        TestUtils.modNElems(1500,1750, 10, sl, Operation.INSERT);
+
+        assertEquals((Integer)1053,sl.size());
+        TestUtils.modNElems(50,120, 10, sl, Operation.DELETE);
+        TestUtils.modNElems(500,565, 10, sl, Operation.DELETE);
+        TestUtils.modNElems(1556,1678, 10, sl, Operation.DELETE);
+        assertEquals((Integer)793,sl.size());
+
+        for(int i = 0;i<50;i++){
+            assertTrue(sl.contains(i));
+        }
+        for(int i = 121;i<=300;i++){
+            assertTrue(sl.contains(i));
+        }
+        for(int i = 566;i<=1000;i++){
+            assertTrue(sl.contains(i));
+        }
+        for(int i = 1500;i<1556;i++){
+            assertTrue(sl.contains(i));
+        }
+        for(int i = 1679;i<=1750;i++){
+            assertTrue(sl.contains(i));
+        }
+    }
+
 
     /*********************************************************************************************/
 
 
+
+
+    /*********************************************************************************************/
+    /* CONTAINS TESTS */
+
+    @Test
+    public void FGSimpleContainsTest() {
+        SkipList<Integer> sl = new FineGrainedCSL<Integer>();
+        for (int i = 0; i < 10000; i++) {
+            assertTrue(sl.insert(i));
+        }
+        for(int i = 0;i< 10000;i++){
+            assertTrue(sl.contains(i));
+        }
+    }
+
+    @Test
+    public void FGComplexContainsTest() {
+        SkipList<Integer> sl = new FineGrainedCSL<Integer>();
+        HashSet<Integer> my = new HashSet<>();
+        int[]p = new int[10000];
+        Random rand = new Random();
+        for(int i = 0;i<10000;i++){
+            int n = rand.nextInt(50000);
+            while(my.contains(n)){
+                n = rand.nextInt(50000);
+            }
+            assertTrue(sl.insert(n));
+            my.add(n);
+            p[i] = n;
+        }
+        for(int i = 0;i<10000;i++){
+            assertTrue(sl.contains(p[i]));
+        }
+        assertEquals((Integer)10000, sl.size());
+    }
+
+    @Test
+    public void FGThreadedContainsTest() {
+        SkipList<Integer> sl = new FineGrainedCSL<Integer>();
+        TestUtils.modNElems(10000, 11, sl, Operation.INSERT);
+        assertEquals((Integer)10001, sl.size());
+        for(int i = 0;i<=10000;i++){
+            assertTrue(sl.contains(i));
+        }
+    }
+    @Test
+    public void FGComplexThreadedContainsTest() {
+        SkipList<Integer> sl = new FineGrainedCSL<Integer>();
+        TestUtils.modNElems(0,100, 10, sl, Operation.INSERT);
+        TestUtils.modNElems(101,200, 10, sl, Operation.INSERT);
+        TestUtils.modNElems(201,300, 10, sl, Operation.INSERT);
+        TestUtils.modNElems(500,1000, 10, sl, Operation.INSERT);
+        TestUtils.modNElems(1500,1750, 10, sl, Operation.INSERT);
+
+        assertEquals((Integer)1053,sl.size());
+
+        for(int i = 0;i<=300;i++){
+            assertTrue(sl.contains(i));
+        }
+        for(int i = 500;i<=1000;i++){
+            assertTrue(sl.contains(i));
+        }
+        for(int i = 1500;i<=1750;i++){
+            assertTrue(sl.contains(i));
+        }
+    }
+
+
+
+    /*********************************************************************************************/
 
 
 }
