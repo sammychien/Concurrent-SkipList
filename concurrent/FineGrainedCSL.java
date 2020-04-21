@@ -29,7 +29,6 @@ public class FineGrainedCSL<T> implements SkipList<T> {
         return lFound;
     }
 
-    @SuppressWarnings("unchecked")
     public boolean contains(T a){
         FineGrainedCSLNode<T>[] preds = (FineGrainedCSLNode<T>[]) new FineGrainedCSLNode[MAX_LEVEL + 1];
         FineGrainedCSLNode<T>[] succs = (FineGrainedCSLNode<T>[]) new FineGrainedCSLNode[MAX_LEVEL + 1];
