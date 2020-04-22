@@ -246,7 +246,7 @@ public class LockFreeCSLTest {
         TestUtils.modNElems(1000, 2000, threads, sl, Operation.INSERT);
         final long stop = System.currentTimeMillis();
 
-        assertEquals((Integer)1053,sl.size());
+        assertEquals((Integer)1202,sl.size());
 
         for(int i = 0; i <= 200; i++){
             assertTrue(sl.contains(i));
