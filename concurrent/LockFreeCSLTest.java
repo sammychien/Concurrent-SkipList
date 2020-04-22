@@ -144,7 +144,7 @@ public class LockFreeCSLTest {
     /* INSERTION TESTS */
 
     @Test
-    public void FGSimpleInsertionTest() {
+    public void LFSimpleInsertionTest() {
         SkipList<Integer> sl = new LockFreeCSL<Integer>();
         for (int i = 0; i < 10000; i++) {
             assertTrue(sl.insert(i));
@@ -159,7 +159,7 @@ public class LockFreeCSLTest {
     }
 
     @Test
-    public void FGComplexInsertionTest() {
+    public void LFComplexInsertionTest() {
         SkipList<Integer> sl = new LockFreeCSL<Integer>();
         HashSet<Integer> my = new HashSet<>();
         int[]p = new int[10000];
@@ -180,7 +180,7 @@ public class LockFreeCSLTest {
     }
 
     @Test
-    public void FGThreadedInsertionTest() {
+    public void LFThreadedInsertionTest() {
         SkipList<Integer> sl = new LockFreeCSL<Integer>();
         TestUtils.modNElems(10000, 10, sl, Operation.INSERT);
         assertEquals((Integer)10001, sl.size());
@@ -190,7 +190,7 @@ public class LockFreeCSLTest {
     }
 
     @Test
-    public void FGComplexThreadedInsertionTest() {
+    public void LFComplexThreadedInsertionTest() {
         SkipList<Integer> sl = new LockFreeCSL<Integer>();
         TestUtils.modNElems(0, 200, 10, sl, Operation.INSERT);
         TestUtils.modNElems(1000, 2000, 10, sl, Operation.INSERT);
