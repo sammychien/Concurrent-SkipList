@@ -12,6 +12,7 @@ import org.junit.Test;
 import concurrent.TestUtils.Operation;
 
 public class LockFreeCSLTest {
+	final int threads = 10;
 
     /*********************************************************************************************/
     /* DELETION TESTS */
@@ -60,24 +61,29 @@ public class LockFreeCSLTest {
     @Test
     public void LFThreadedDeletionTest() {
         SkipList<Integer> sl = new LockFreeCSL<Integer>();
-        TestUtils.modNElems(10000, 10, sl, Operation.INSERT);
+        TestUtils.modNElems(10000, threads, sl, Operation.INSERT);
         assertEquals((Integer)10001, sl.size());
-        TestUtils.modNElems(10000, 10, sl, Operation.DELETE);
+        final long start = System.currentTimeMillis();
+        TestUtils.modNElems(10000, threads, sl, Operation.DELETE);
+        final long stop = System.currentTimeMillis();
         assertEquals((Integer)0, sl.size());
+        System.out.println("LFThreadedDeletionTest: " + (stop - start));
     }
     @Test
     public void LFComplexThreadedDeletionTest() {
         SkipList<Integer> sl = new LockFreeCSL<Integer>();
-        TestUtils.modNElems(0,100, 10, sl, Operation.INSERT);
-        TestUtils.modNElems(101,200, 10, sl, Operation.INSERT);
-        TestUtils.modNElems(201,300, 10, sl, Operation.INSERT);
-        TestUtils.modNElems(500,1000, 10, sl, Operation.INSERT);
-        TestUtils.modNElems(1500,1750, 10, sl, Operation.INSERT);
+        TestUtils.modNElems(0,100, threads, sl, Operation.INSERT);
+        TestUtils.modNElems(101,200, threads, sl, Operation.INSERT);
+        TestUtils.modNElems(201,300, threads, sl, Operation.INSERT);
+        TestUtils.modNElems(500,1000, threads, sl, Operation.INSERT);
+        TestUtils.modNElems(1500,1750, threads, sl, Operation.INSERT);
 
         assertEquals((Integer)1053,sl.size());
-        TestUtils.modNElems(50,120, 10, sl, Operation.DELETE);
-        TestUtils.modNElems(500,565, 10, sl, Operation.DELETE);
-        TestUtils.modNElems(1556,1678, 10, sl, Operation.DELETE);
+        final long start = System.currentTimeMillis();
+        TestUtils.modNElems(50,120, threads, sl, Operation.DELETE);
+        TestUtils.modNElems(500,565, threads, sl, Operation.DELETE);
+        TestUtils.modNElems(1556,1678, threads, sl, Operation.DELETE);
+        final long stop = System.currentTimeMillis();
         assertEquals((Integer)793,sl.size());
 
         for(int i = 0;i<50;i++){
@@ -95,6 +101,7 @@ public class LockFreeCSLTest {
         for(int i = 1679;i<=1750;i++){
             assertTrue(sl.contains(i));
         }
+        System.out.println("LFComplexThreadedDeletionTest: " + (stop - start));
     }
 
 
@@ -136,6 +143,45 @@ public class LockFreeCSLTest {
         }
         assertEquals((Integer)10000, sl.size());
     }
+    
+    @Test
+    public void LFThreadedContainsTest() {
+        SkipList<Integer> sl = new LockFreeCSL<Integer>();
+        TestUtils.modNElems(10000, threads, sl, Operation.INSERT);
+        assertEquals((Integer)10001, sl.size());
+    	final long start = System.currentTimeMillis();
+        for(int i = 0;i<=10000;i++){
+            assertTrue(sl.contains(i));
+        }
+        final long stop = System.currentTimeMillis();
+        System.out.println("LFThreadedContainsTest: " + (stop - start));
+    }
+    
+    @Test
+    public void FGComplexThreadedContainsTest() {
+        SkipList<Integer> sl = new LockFreeCSL<Integer>();
+        TestUtils.modNElems(0,100, threads, sl, Operation.INSERT);
+        TestUtils.modNElems(101,200, threads, sl, Operation.INSERT);
+        TestUtils.modNElems(201,300, threads, sl, Operation.INSERT);
+        TestUtils.modNElems(500,1000, threads, sl, Operation.INSERT);
+        TestUtils.modNElems(1500,1750, threads, sl, Operation.INSERT);
+
+        assertEquals((Integer)1053,sl.size());
+
+    	final long start = System.currentTimeMillis();
+        for(int i = 0;i<=300;i++){
+            assertTrue(sl.contains(i));
+        }
+        for(int i = 500;i<=1000;i++){
+            assertTrue(sl.contains(i));
+        }
+        for(int i = 1500;i<=1750;i++){
+            assertTrue(sl.contains(i));
+        }
+        final long stop = System.currentTimeMillis();
+        System.out.println("LFComplexThreadedContainsTest: " + (stop - start));
+    }
+    
     /*********************************************************************************************/
 
 
@@ -150,7 +196,7 @@ public class LockFreeCSLTest {
             assertTrue(sl.insert(i));
         }
         for (int i = 0; i < 10000; i++) {
-            assertTrue(s1.contains(i));
+            assertTrue(sl.contains(i));
         }
         for (int i = 0; i < 10000; i++){
             assertFalse(sl.insert(i));
@@ -182,18 +228,23 @@ public class LockFreeCSLTest {
     @Test
     public void LFThreadedInsertionTest() {
         SkipList<Integer> sl = new LockFreeCSL<Integer>();
-        TestUtils.modNElems(10000, 10, sl, Operation.INSERT);
+        final long start = System.currentTimeMillis();
+        TestUtils.modNElems(10000, threads, sl, Operation.INSERT);
+        final long stop = System.currentTimeMillis();
         assertEquals((Integer)10001, sl.size());
         for(int i = 0; i <= 10000; i++){
             assertFalse(sl.insert(i));
         }
+        System.out.println("LFThreadedInsertionTest: " + (stop - start));
     }
 
     @Test
     public void LFComplexThreadedInsertionTest() {
         SkipList<Integer> sl = new LockFreeCSL<Integer>();
-        TestUtils.modNElems(0, 200, 10, sl, Operation.INSERT);
-        TestUtils.modNElems(1000, 2000, 10, sl, Operation.INSERT);
+        final long  start = System.currentTimeMillis();
+        TestUtils.modNElems(0, 200, threads, sl, Operation.INSERT);
+        TestUtils.modNElems(1000, 2000, threads, sl, Operation.INSERT);
+        final long stop = System.currentTimeMillis();
 
         assertEquals((Integer)1053,sl.size());
 
@@ -203,7 +254,7 @@ public class LockFreeCSLTest {
         for(int i = 201; i < 1000; i++){
             assertFalse(sl.contains(i));
         }
-
+        System.out.println("LFComplexThreadedInsertionTest: " + (stop - start));
     }
 
 
