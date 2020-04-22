@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentSkipListSet;
 
 public final class TestUtils {
 
-    enum Operation {INSERT, DELETE, NONE}
+    enum Operation {INSERT, DELETE, CONTAINS}
 
     public static void modNElems(int N, int numThreads, SkipList<Integer> sl, final Operation mod) {
         int quotient = N / numThreads;
@@ -101,7 +101,12 @@ public final class TestUtils {
                 for (int i = begin; i <= end; ++i) {
                     assertTrue(sl.delete(i));
                 }
+            } else if(mod == Operation.CONTAINS){
+                for(int i = begin;i<=end;++i){
+                    assertTrue(sl.contains(i));
+                }
             }
+
         }
     }
     
@@ -121,6 +126,10 @@ public final class TestUtils {
             } else if (mod == Operation.DELETE) {
                 for (int i = begin; i <= end; ++i) {
                     assertTrue(sl.remove(i));
+                }
+            } else if(mod == Operation.CONTAINS){
+                for(int i = begin;i<=end;++i){
+                    assertTrue(sl.contains(i));
                 }
             }
         }

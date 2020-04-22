@@ -150,9 +150,8 @@ public class LockFreeCSLTest {
         TestUtils.modNElems(10000, threads, sl, Operation.INSERT);
         assertEquals((Integer)10001, sl.size());
     	final long start = System.currentTimeMillis();
-        for(int i = 0;i<=10000;i++){
-            assertTrue(sl.contains(i));
-        }
+        TestUtils.modNElems(10000, threads, sl, Operation.CONTAINS);
+
         final long stop = System.currentTimeMillis();
         System.out.println("LFThreadedContainsTest: " + (stop - start));
     }
@@ -169,15 +168,9 @@ public class LockFreeCSLTest {
         assertEquals((Integer)1053,sl.size());
 
     	final long start = System.currentTimeMillis();
-        for(int i = 0;i<=300;i++){
-            assertTrue(sl.contains(i));
-        }
-        for(int i = 500;i<=1000;i++){
-            assertTrue(sl.contains(i));
-        }
-        for(int i = 1500;i<=1750;i++){
-            assertTrue(sl.contains(i));
-        }
+        TestUtils.modNElems(0,300, threads, sl, Operation.CONTAINS);
+        TestUtils.modNElems(500,1000, threads, sl, Operation.CONTAINS);
+        TestUtils.modNElems(1500,1750, threads, sl, Operation.CONTAINS);
         final long stop = System.currentTimeMillis();
         System.out.println("LFComplexThreadedContainsTest: " + (stop - start));
     }
