@@ -13,7 +13,7 @@ import concurrent.TestUtils.Operation;
 
 public class FineGrainedCSLTest {
 
-    
+
     /*********************************************************************************************/
     /* DELETION TESTS */
     @Test
@@ -63,7 +63,7 @@ public class FineGrainedCSLTest {
         SkipList<Integer> sl = new FineGrainedCSL<Integer>();
         TestUtils.modNElems(10000, 10, sl, Operation.INSERT);
         assertEquals((Integer)10001, sl.size());
-        TestUtils.modNElems(10000, 10, sl, Operation.DELETE);     
+        TestUtils.modNElems(10000, 10, sl, Operation.DELETE);
         assertEquals((Integer)0, sl.size());
     }
     @Test
@@ -174,5 +174,76 @@ public class FineGrainedCSLTest {
 
     /*********************************************************************************************/
 
+
+
+    /*********************************************************************************************/
+    /* INSERTION TESTS */
+
+    @Test
+    public void FGSimpleInsertionTest() {
+        SkipList<Integer> sl = new FineGrainedCSL<Integer>();
+        for (int i = 0; i < 10000; i++) {
+            assertTrue(sl.insert(i));
+        }
+        for (int i = 0; i < 10000; i++) {
+            assertTrue(s1.contains(i));
+        }
+        for (int i = 0; i < 10000; i++){
+            assertFalse(sl.insert(i));
+        }
+        assertEquals((Integer)10000, sl.size());
+    }
+
+    @Test
+    public void FGComplexInsertionTest() {
+        SkipList<Integer> sl = new FineGrainedCSL<Integer>();
+        HashSet<Integer> my = new HashSet<>();
+        int[]p = new int[10000];
+        Random rand = new Random();
+        for (int i = 0; i < 10000; i++){
+            int n = rand.nextInt(50000);
+            while (my.contains(n)){
+                n = rand.nextInt(50000);
+            }
+            assertTrue(sl.insert(n));
+            my.add(n);
+            p[i] = n;
+        }
+        for(int i = 0; i < 10000; i++){
+            assertFalse(sl.insert(p[i]));
+        }
+        assertEquals((Integer)10000, sl.size());
+    }
+
+    @Test
+    public void FGThreadedInsertionTest() {
+        SkipList<Integer> sl = new FineGrainedCSL<Integer>();
+        TestUtils.modNElems(10000, 10, sl, Operation.INSERT);
+        assertEquals((Integer)10001, sl.size());
+        for(int i = 0; i <= 10000; i++){
+            assertFalse(sl.insert(i));
+        }
+    }
+
+    @Test
+    public void FGComplexThreadedInsertionTest() {
+        SkipList<Integer> sl = new FineGrainedCSL<Integer>();
+        TestUtils.modNElems(0, 200, 10, sl, Operation.INSERT);
+        TestUtils.modNElems(1000, 2000, 10, sl, Operation.INSERT);
+
+        assertEquals((Integer)1053,sl.size());
+
+        for(int i = 0; i <= 200; i++){
+            assertTrue(sl.contains(i));
+        }
+        for(int i = 201; i < 1000; i++){
+            assertFalse(sl.contains(i));
+        }
+
+    }
+
+
+
+    /*********************************************************************************************/
 
 }
