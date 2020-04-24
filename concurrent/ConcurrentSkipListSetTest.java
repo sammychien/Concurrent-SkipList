@@ -13,7 +13,7 @@ import org.junit.Test;
 import concurrent.TestUtils.Operation;
 
 public class ConcurrentSkipListSetTest {
-	final int threads = 10;
+	final int threads = 512;
 
 
     /*********************************************************************************************/
