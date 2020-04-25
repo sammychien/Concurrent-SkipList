@@ -242,13 +242,13 @@ public class IterSkiplistTest {
         public void IterThreadedDeletionTest() {
         	IterSkiplist sl = new IterSkiplist();
             //TestUtils.modNElems(10000, threads, sl, Operation.INSERT);
-            for(int i = 0; i <= 10000; i++) {
+            for(int i = 0; i <= 1000000; i++) {
             	sl.insert(i);
             }
-        	assertEquals((Integer)10001, sl.size());
+        	assertEquals((Integer)1000001, sl.size());
         	final long start = System.currentTimeMillis();
             //TestUtils.modNElems(10000, threads, sl, Operation.DELETE);
-        	for(int i = 0; i <= 10000; i++) {
+        	for(int i = 0; i <= 1000000; i++) {
         		sl.delete(i);
         	}
             final long stop = System.currentTimeMillis();
@@ -359,12 +359,12 @@ public class IterSkiplistTest {
         public void IterThreadedContainsTest() {
         	IterSkiplist sl = new IterSkiplist();
             //TestUtils.modNElems(10000, threads, sl, Operation.INSERT);
-        	for(int i = 0; i <= 10000; i++) {
+        	for(int i = 0; i <= 1000000; i++) {
         		sl.insert(i);
         	}
-            assertEquals((Integer)10001, sl.size());
+            assertEquals((Integer)1000001, sl.size());
         	final long start = System.currentTimeMillis();
-            for(int i = 0;i<=10000;i++){
+            for(int i = 0;i<=1000000;i++){
                 assertTrue(sl.contains(i));
             }
             final long stop = System.currentTimeMillis();
@@ -460,12 +460,12 @@ public class IterSkiplistTest {
         	IterSkiplist sl = new IterSkiplist();
             final long start = System.currentTimeMillis();
             //TestUtils.modNElems(10000, threads, sl, Operation.INSERT);
-            for(int i = 0; i <= 10000; i++) {
+            for(int i = 0; i <= 1000000; i++) {
             	sl.insert(i);
             }
             final long stop = System.currentTimeMillis();
-            assertEquals((Integer)10001, sl.size());
-            for(int i = 0; i <= 10000; i++){
+            assertEquals((Integer)1000001, sl.size());
+            for(int i = 0; i <= 1000000; i++){
                 assertFalse(sl.insert(i));
             }
             System.out.println("IterThreadedInsertionTest: " + (stop - start));
@@ -485,7 +485,7 @@ public class IterSkiplistTest {
             }
             final long stop = System.currentTimeMillis();
             
-            assertEquals((Integer)1053,sl.size());
+            assertEquals((Integer)1202,sl.size());
 
             for(int i = 0; i <= 200; i++){
                 assertTrue(sl.contains(i));

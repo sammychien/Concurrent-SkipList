@@ -63,10 +63,10 @@ public class ConcurrentSkipListSetTest {
     @Test
     public void CSLSThreadedDeletionTest() {
         ConcurrentSkipListSet<Integer> sl = new ConcurrentSkipListSet<Integer>();
-        TestUtils.modNElemsCSLS(10000, threads, sl, Operation.INSERT);
-        assertEquals(10001, sl.size());
+        TestUtils.modNElemsCSLS(1000000, threads, sl, Operation.INSERT);
+        assertEquals(1000001, sl.size());
     	final long start = System.currentTimeMillis();
-        TestUtils.modNElemsCSLS(10000, threads, sl, Operation.DELETE);
+        TestUtils.modNElemsCSLS(1000000, threads, sl, Operation.DELETE);
         final long stop = System.currentTimeMillis();
         assertEquals(0, sl.size());
         System.out.println("CSLSThreadedDeletionTest: " + (stop - start));
@@ -103,7 +103,7 @@ public class ConcurrentSkipListSetTest {
         for(int i = 1679;i<=1750;i++){
             assertTrue(sl.contains(i));
         }
-        System.out.println("CSLSComplexThreadedDeletionTest: " + (stop - start));
+        // System.out.println("CSLSComplexThreadedDeletionTest: " + (stop - start));
     }
 
 
@@ -150,10 +150,10 @@ public class ConcurrentSkipListSetTest {
     @Test
     public void CSLSThreadedContainsTest() {
         ConcurrentSkipListSet<Integer> sl = new ConcurrentSkipListSet<Integer>();
-        TestUtils.modNElemsCSLS(10000, threads, sl, Operation.INSERT);
-        assertEquals(10001, sl.size());
+        TestUtils.modNElemsCSLS(1000000, threads, sl, Operation.INSERT);
+        assertEquals(1000001, sl.size());
     	final long start = System.currentTimeMillis();
-        TestUtils.modNElemsCSLS(10000, threads, sl, Operation.CONTAINS);
+        TestUtils.modNElemsCSLS(1000000, threads, sl, Operation.CONTAINS);
 
         final long stop = System.currentTimeMillis();
         System.out.println("CSLSThreadedContainsTest: " + (stop - start));
@@ -174,7 +174,7 @@ public class ConcurrentSkipListSetTest {
         TestUtils.modNElemsCSLS(500,1000, threads, sl, Operation.CONTAINS);
         TestUtils.modNElemsCSLS(1500,1750, threads, sl, Operation.CONTAINS);
         final long stop = System.currentTimeMillis();
-        System.out.println("CSLSComplexThreadedContainsTest: " + (stop - start));
+        // System.out.println("CSLSComplexThreadedContainsTest: " + (stop - start));
     }
 
 
@@ -226,10 +226,10 @@ public class ConcurrentSkipListSetTest {
     public void CSLSThreadedInsertionTest() {
         ConcurrentSkipListSet<Integer> sl = new ConcurrentSkipListSet<Integer>();
     	final long start = System.currentTimeMillis();
-        TestUtils.modNElemsCSLS(10000, threads, sl, Operation.INSERT);
+        TestUtils.modNElemsCSLS(1000000, threads, sl, Operation.INSERT);
         final long stop = System.currentTimeMillis();
-        assertEquals(10001, sl.size());
-        for(int i = 0; i <= 10000; i++){
+        assertEquals(1000001, sl.size());
+        for(int i = 0; i <= 1000000; i++){
             assertFalse(sl.add(i));
         }
         System.out.println("CSLSThreadedInsertionTest: " + (stop - start));
@@ -251,7 +251,7 @@ public class ConcurrentSkipListSetTest {
         for(int i = 201; i < 1000; i++){
             assertFalse(sl.contains(i));
         }
-        System.out.println("CSLSComplexThreadedInsertionTest: " + (stop - start));
+        // System.out.println("CSLSComplexThreadedInsertionTest: " + (stop - start));
 
     }
 

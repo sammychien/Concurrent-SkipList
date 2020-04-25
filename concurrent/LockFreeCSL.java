@@ -13,7 +13,7 @@ public class LockFreeCSL<T> implements SkipList<T> {
         }
     }
 
-    
+    @SuppressWarnings("unchecked")
     public boolean insert(T x) {
         int topLevel = randomLevel();
         int bottomLevel = 0;
@@ -50,6 +50,7 @@ public class LockFreeCSL<T> implements SkipList<T> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public boolean delete(T x) {
         int bottomLevel = 0;
         LockFreeCSLNode<T>[] preds = (LockFreeCSLNode<T>[]) new LockFreeCSLNode[MAX_LEVEL + 1];

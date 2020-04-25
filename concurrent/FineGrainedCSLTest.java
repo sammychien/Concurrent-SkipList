@@ -14,7 +14,6 @@ import concurrent.TestUtils.Operation;
 public class FineGrainedCSLTest {
 	final int threads = 512;
 
-
     /*********************************************************************************************/
     /* DELETION TESTS */
     @Test
@@ -62,10 +61,10 @@ public class FineGrainedCSLTest {
     @Test
     public void FGThreadedDeletionTest() {
         SkipList<Integer> sl = new FineGrainedCSL<Integer>();
-        TestUtils.modNElems(10000, threads, sl, Operation.INSERT);
-        assertEquals((Integer)10001, sl.size());
+        TestUtils.modNElems(1000000, threads, sl, Operation.INSERT);
+        assertEquals((Integer)1000001, sl.size());
     	final long start = System.currentTimeMillis();
-        TestUtils.modNElems(10000, threads, sl, Operation.DELETE);
+        TestUtils.modNElems(1000000, threads, sl, Operation.DELETE);
         final long stop = System.currentTimeMillis();
         assertEquals((Integer)0, sl.size());
         System.out.println("FGThreadedDeletionTest: " + (stop - start));
@@ -102,7 +101,7 @@ public class FineGrainedCSLTest {
         for(int i = 1679;i<=1750;i++){
             assertTrue(sl.contains(i));
         }
-        System.out.println("FGComplexThreadedDeletionTest: " + (stop - start));
+        // System.out.println("FGComplexThreadedDeletionTest: " + (stop - start));
     }
 
 
@@ -149,10 +148,10 @@ public class FineGrainedCSLTest {
     @Test
     public void FGThreadedContainsTest() {
         SkipList<Integer> sl = new FineGrainedCSL<Integer>();
-        TestUtils.modNElems(10000, threads, sl, Operation.INSERT);
-        assertEquals((Integer)10001, sl.size());
+        TestUtils.modNElems(1000000, threads, sl, Operation.INSERT);
+        assertEquals((Integer)1000001, sl.size());
     	final long start = System.currentTimeMillis();
-        TestUtils.modNElems(10000, threads, sl, Operation.CONTAINS);
+        TestUtils.modNElems(1000000, threads, sl, Operation.CONTAINS);
         final long stop = System.currentTimeMillis();
         System.out.println("FGThreadedContainsTest: " + (stop - start));
     }
@@ -172,7 +171,7 @@ public class FineGrainedCSLTest {
         TestUtils.modNElems(500,1000, threads, sl, Operation.CONTAINS);
         TestUtils.modNElems(1500,1750, threads, sl, Operation.CONTAINS);
         final long stop = System.currentTimeMillis();
-        System.out.println("FGComplexThreadedContainsTest: " + (stop - start));
+        // System.out.println("FGComplexThreadedContainsTest: " + (stop - start));
     }
 
 
@@ -224,10 +223,10 @@ public class FineGrainedCSLTest {
     public void FGThreadedInsertionTest() {
         SkipList<Integer> sl = new FineGrainedCSL<Integer>();
         final long start = System.currentTimeMillis();
-        TestUtils.modNElems(10000, threads, sl, Operation.INSERT);
+        TestUtils.modNElems(1000000, threads, sl, Operation.INSERT);
         final long stop = System.currentTimeMillis();
-        assertEquals((Integer)10001, sl.size());
-        for(int i = 0; i <= 10000; i++){
+        assertEquals((Integer)1000001, sl.size());
+        for(int i = 0; i <= 1000000; i++){
             assertFalse(sl.insert(i));
         }
         System.out.println("FGThreadedInsertionTest: " + (stop - start));
@@ -249,7 +248,7 @@ public class FineGrainedCSLTest {
         for(int i = 201; i < 1000; i++){
             assertFalse(sl.contains(i));
         }
-        System.out.println("FGComplexThreadedInsertionTest: " + (stop - start));
+        // System.out.println("FGComplexThreadedInsertionTest: " + (stop - start));
     }
 
 
