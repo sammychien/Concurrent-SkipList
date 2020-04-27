@@ -12,7 +12,7 @@ import org.junit.Test;
 import concurrent.TestUtils.Operation;
 
 public class LockFreeCSLTest {
-	final int threads = 1;
+	final int threads = 512;
 
     /*********************************************************************************************/
     /* DELETION TESTS */
